@@ -15,18 +15,18 @@ export default function Portfolio() {
 
   const { data, loading } = useQuery(GET_SERVICES_FOR_USERS);
 
-  // useEffect(() => {
-  //   // Initialize Isotope
-  //   isotopeInstance.current = new Isotope(gridElement.current, {
-  //     itemSelector: ".portfolio-item",
-  //     layoutMode: "fitRows",
-  //   });
+  useEffect(() => {
+    // Initialize Isotope
+    isotopeInstance.current = new Isotope(gridElement.current, {
+      itemSelector: ".portfolio-item",
+      layoutMode: "fitRows",
+    });
 
-  //   // Cleanup on unmount
-  //   return () => {
-  //     isotopeInstance.current.destroy();
-  //   };
-  // }, [activeFilter]);
+    // Cleanup on unmount
+    return () => {
+      isotopeInstance.current.destroy();
+    };
+  }, [activeFilter]);
 
   useEffect(() => {
     if (isotopeInstance.current) {
@@ -98,66 +98,74 @@ export default function Portfolio() {
     <section id="portfolio" className="portfolio section-bg">
       <div className="container" data-aos="fade-up" data-aos-delay="100">
         <div className="section-title">
-          <h2>Our Portfolio</h2>
+          <h2>Bethel TV</h2>
           <p>
-            Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
+            {/* Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
             aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos
             quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-            fugiat sit in iste officiis commodi quidem hic quas.
+            fugiat sit in iste officiis commodi quidem hic quas. */}
           </p>
         </div>
 
         <div className="row">
           <div className="col-lg-12">
             <ul id="portfolio-flters">
-              <li data-filter="*" className="filter-active">
+              {/* <li
+                data-filter="*"
+                className="filter-active"
+                onClick={() => filterItems("*")}
+              >
                 All
-              </li>
+              </li> */}
               <li
                 data-filter=".filter-deliverance"
                 className={
-                  activeFilter === "filter-deliverance" && "filter-active"
+                  activeFilter === ".filter-deliverance" && "filter-active"
                 }
-                onClick={() => filterItems("filter-deliverance")}
+                onClick={() => filterItems(".filter-deliverance")}
               >
                 Deliverance Time
               </li>
               <li
                 data-filter=".filter-worship"
-                className={activeFilter === "filter-worship" && "filter-active"}
-                onClick={() => filterItems("filter-worship")}
+                className={
+                  activeFilter === ".filter-worship" && "filter-active"
+                }
+                onClick={() => filterItems(".filter-worship")}
               >
                 Worship
               </li>
               <li
                 data-filter=".filter-miracle"
-                className={activeFilter === "filter-miracle" && "filter-active"}
-                onClick={() => filterItems("filter-miracle")}
+                className={
+                  activeFilter === ".filter-miracle" && "filter-active"
+                }
+                onClick={() => filterItems(".filter-miracle")}
               >
                 Miracle
               </li>
               <li
                 data-filter=".filter-testimony"
                 className={
-                  activeFilter === "filter-testimony" && "filter-active"
+                  activeFilter === ".filter-testimony" && "filter-active"
                 }
-                onClick={() => filterItems("filter-testimony")}
+                onClick={() => filterItems(".filter-testimony")}
               >
                 Testimony
               </li>
               <li
                 data-filter=".filter-teaching"
                 className={
-                  activeFilter === "filter-teaching" && "filter-active"
+                  activeFilter === ".filter-teaching" && "filter-active"
                 }
-                onClick={() => filterItems("filter-teaching")}
+                onClick={() => filterItems(".filter-teaching")}
               >
                 Teaching
               </li>
               <li
                 data-filter=".filter-preaching"
                 className={
-                  activeFilter === "filter-preaching" && "filter-active"
+                  activeFilter === ".filter-preaching" && "filter-active"
                 }
                 onClick={() => filterItems(".filter-preaching")}
               >
@@ -167,7 +175,12 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <div className="row portfolio-container">
+        <div
+          className="row portfolio-container"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          ref={gridElement}
+        >
           {portfolioItems.map((item, index) => (
             <div
               key={index}
@@ -196,55 +209,55 @@ export default function Portfolio() {
 
 const portfolioItems = [
   {
-    videoUrl: "https://www.youtube.com/embed/videoid1",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Deliverance 1",
     category: "Deliverance Time",
     filter: "filter-deliverance",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid2",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Worship 1",
     category: "Worship",
     filter: "filter-worship",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid3",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Miracle 1",
     category: "Miracle",
     filter: "filter-miracle",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid4",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Testimony 1",
     category: "Testimony",
     filter: "filter-testimony",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid5",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Teaching 1",
     category: "Teaching",
     filter: "filter-teaching",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid6",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Preaching 1",
     category: "Preaching",
     filter: "filter-preaching",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid7",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Deliverance 2",
     category: "Deliverance Time",
     filter: "filter-deliverance",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid8",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Worship 2",
     category: "Worship",
     filter: "filter-worship",
   },
   {
-    videoUrl: "https://www.youtube.com/embed/videoid9",
+    videoUrl: "https://www.youtube.com/embed/rcGqqDHTmxE",
     title: "Miracle 2",
     category: "Miracle",
     filter: "filter-miracle",

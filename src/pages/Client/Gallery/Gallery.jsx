@@ -1,10 +1,10 @@
+import { useQuery } from "@apollo/client";
 import GLightbox from "glightbox";
 import "glightbox/dist/css/glightbox.min.css";
 import { t } from "i18next";
 import Isotope from "isotope-layout";
 import React, { useEffect, useRef, useState } from "react";
 import { GET_GALLERY_FOR_USERS } from "../../../graphql/gallery";
-import { useQuery } from "@apollo/client";
 export default function Gallery() {
   useEffect(() => {
     const lightbox = GLightbox({
@@ -23,7 +23,7 @@ export default function Gallery() {
   const isotopeInstance = useRef(null);
   const gridElement = useRef(null);
 
-  const [activeFilter, setActiveFilter] = useState(".category-worship");
+  const [activeFilter, setActiveFilter] = useState("*");
 
   const { data, loading } = useQuery(GET_GALLERY_FOR_USERS);
 
@@ -134,21 +134,23 @@ export default function Gallery() {
       <section id="gallery" className="gallery section portfolio">
         <div className="col-lg-12 d-flex justify-content-center">
           <ul id="portfolio-flters">
-            {data?.galleryCategoryForUsers?.map((category) => (
+            <li
+              data-filter="*"
+              className={activeFilter === "*" ? "filter-active" : ""}
+              onClick={() => filterItems("*")}
+            >
+              All
+            </li>
+
+            {dataFilters?.map((dataFilter) => (
               <li
-                key={category.title}
+                data-filter=".filter-deliverance"
                 className={
-                  activeFilter ===
-                    category?.title?.toLowerCase().replaceAll(" ", "_") &&
-                  "filter-active"
+                  activeFilter === dataFilter.dataFilter ? "filter-active" : ""
                 }
-                onClick={() =>
-                  filterItems(
-                    category?.title?.toLowerCase().replaceAll(" ", "_")
-                  )
-                }
+                onClick={() => filterItems(dataFilter.dataFilter)}
               >
-                {category.title}
+                {dataFilter.label}
               </li>
             ))}
           </ul>
@@ -161,7 +163,87 @@ export default function Gallery() {
           ref={gridElement}
         >
           <div className="row gy-4 justify-content-center">
-            {data?.galleryCategoryForUsers.map((category) =>
+            <div className="row gy-4 justify-content-center">
+              {dataFilters.map((dataFilter) =>
+                [...Array(48).keys()].map((n) => (
+                  <div
+                    key={n}
+                    className={`col-lg-3 col-md-6 portfolio-item ${dataFilter}`}
+                  >
+                    <div className="gallery-item h-100">
+                      <img
+                        src={`assets/img/gallery/img (${n + 1}).jpg`}
+                        className="img-fluid"
+                        alt=""
+                        style={{ width: "100%" }}
+                      />
+                      <div className="gallery-links d-flex align-items-center justify-content-center">
+                        <a
+                          href={`assets/img/gallery/img (${n + 1}).jpg`}
+                          title="Gallery 1"
+                          className="glightbox preview-link"
+                        >
+                          <i className="bi bi-arrows-angle-expand"></i>
+                        </a>
+                      </div>
+                    </div>
+                    {/* <div className="portfolio-wrap">
+                    <div className="embed-responsive embed-responsive-16by9">
+                      <iframe
+                        src={n.videoUrl}
+                        title={n.title}
+                        allowFullScreen
+                      ></iframe>
+                    </div> */}
+                    {/* <div className="portfolio-info">
+                  <h4>{item.title}</h4>
+                  <p>{item.category}</p>
+                </div> */}
+                    {/* </div> */}
+                  </div>
+                ))
+              )}
+              {[...Array(48).keys()].map((n) => (
+                <div
+                  key={n}
+                  className={`col-lg-3 col-md-6 portfolio-item ${
+                    dataFilters[Math.floor(Math.random() * dataFilters.length)]
+                      .category
+                  }`}
+                >
+                  <div className="gallery-item h-100">
+                    <img
+                      src={`assets/img/gallery/img (${n + 1}).jpg`}
+                      className="img-fluid"
+                      alt=""
+                      style={{ width: "100%" }}
+                    />
+                    <div className="gallery-links d-flex align-items-center justify-content-center">
+                      <a
+                        href={`assets/img/gallery/img (${n + 1}).jpg`}
+                        title="Gallery 1"
+                        className="glightbox preview-link"
+                      >
+                        <i className="bi bi-arrows-angle-expand"></i>
+                      </a>
+                    </div>
+                  </div>
+                  {/* <div className="portfolio-wrap">
+                    <div className="embed-responsive embed-responsive-16by9">
+                      <iframe
+                        src={n.videoUrl}
+                        title={n.title}
+                        allowFullScreen
+                      ></iframe>
+                    </div> */}
+                  {/* <div className="portfolio-info">
+                  <h4>{item.title}</h4>
+                  <p>{item.category}</p>
+                </div> */}
+                  {/* </div> */}
+                </div>
+              ))}
+              {/* {data?.galleryCategoryForUsers.map((category) =>
               category?.galleries?.map((gallery) =>
                 JSON.parse(gallery?.images || {})?.map((image) => (
                   <div
@@ -183,15 +265,79 @@ export default function Gallery() {
                         >
                           <i className="bi bi-arrows-angle-expand"></i>
                         </a>
-                        {/* <a href="gallery-single.html" className="details-link">
-                    <i className="bi bi-link-45deg"></i>
-                  </a> */}
                       </div>
                     </div>
                   </div>
                 ))
               )
-            )}
+            )} */}
+            </div>
+          </div>
+        </div>
+        <div
+          className="container-fluid"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          ref={gridElement}
+        >
+          <div className="row gy-4 justify-content-center">
+            {[...Array(48).keys()].map((n) => (
+              <div
+                key={n}
+                className={
+                  "col-xl-3 col-lg-4 col-md-6 " +
+                  dataFilters[Math.floor(Math.random() * dataFilters.length)]
+                    .category
+                }
+                // style={{ height: "14rem" }}
+              >
+                <div className="gallery-item h-100">
+                  <img
+                    src={`/assets/img/gallery/img (${n + 1}).jpg`}
+                    className="img-fluid"
+                    alt=""
+                    // style={{ height: "15rem", width: "15rem" }}
+                  />
+                  <div className="gallery-links d-flex align-items-center justify-content-center">
+                    <a
+                      href={`/assets/img/gallery/img (${n + 1}).jpg`}
+                      title="Gallery 1"
+                      className="glightbox preview-link"
+                    >
+                      <i className="bi bi-arrows-angle-expand"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* {data?.galleryCategoryForUsers.map((category) =>
+              category?.galleries?.map((gallery) =>
+                JSON.parse(gallery?.images || {})?.map((image) => (
+                  <div
+                    key={image}
+                    className={
+                      "col-xl-3 col-lg-4 col-md-6 " +
+                      dataFilters[
+                        Math.floor(Math.random() * dataFilters.length)
+                      ].category
+                    }
+                  >
+                    <div className="gallery-item h-100">
+                      <img src={image} className="img-fluid" alt="" />
+                      <div className="gallery-links d-flex align-items-center justify-content-center">
+                        <a
+                          href={image}
+                          title="Gallery 1"
+                          className="glightbox preview-link"
+                        >
+                          <i className="bi bi-arrows-angle-expand"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )
+            )} */}
           </div>
         </div>
       </section>
